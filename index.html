@@ -640,6 +640,25 @@
     letter-spacing: 0.1em;
     opacity: 0.6;
   }
+  .form-status {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    padding: 1rem 1.2rem;
+    border: 1px solid;
+    display: none;
+  }
+  .form-status.success {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(232,184,75,0.06);
+    display: block;
+  }
+  .form-status.error {
+    border-color: var(--amber);
+    color: var(--amber);
+    background: rgba(200,135,58,0.06);
+    display: block;
+  }
 
   /* FOOTER */
   footer {
@@ -892,7 +911,8 @@
           <label class="form-label" for="message">Message</label>
           <textarea class="form-textarea" id="message" name="message" placeholder="What's on your mind?" required></textarea>
         </div>
-        <button type="submit" class="form-submit">Send message</button>
+        <button type="submit" class="form-submit" id="formSubmit">Send message</button>
+        <div class="form-status" id="formStatus"></div>
         <p class="form-notice">Your message goes straight to the team. Your email is never shared publicly.</p>
       </form>
     </div>
@@ -940,16 +960,38 @@
   }, { threshold: 0.1 });
   reveals.forEach(el => observer.observe(el));
 
-  // Contact form — opens user's mail client with prefilled email
+  // Contact form — submits to Formspree (email address stays off the page)
   const form = document.getElementById('contactForm');
-  form.addEventListener('submit', function(e) {
+  const submitBtn = document.getElementById('formSubmit');
+  const statusEl = document.getElementById('formStatus');
+
+  form.addEventListener('submit', async function(e) {
     e.preventDefault();
-    const name = form.name.value;
-    const email = form.email.value;
-    const message = form.message.value;
-    const subject = encodeURIComponent('Website message from ' + name);
-    const body = encodeURIComponent(message + '\n\n— ' + name + ' (' + email + ')');
-    window.location.href = `mailto:lorenzvonroemer@gmail.com?subject=${subject}&body=${body}`;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+    statusEl.className = 'form-status';
+    statusEl.textContent = '';
+
+    try {
+      const res = await fetch('https://formspree.io/f/meedvroz', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      });
+      if (res.ok) {
+        statusEl.className = 'form-status success';
+        statusEl.textContent = 'Message sent — we\'ll be in touch!';
+        form.reset();
+      } else {
+        throw new Error();
+      }
+    } catch {
+      statusEl.className = 'form-status error';
+      statusEl.textContent = 'Something went wrong. Please try again or reach out on Instagram.';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send message';
+    }
   });
 </script>
 </body>
