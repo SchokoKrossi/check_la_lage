@@ -313,15 +313,12 @@
   .hero-photo {
     position: relative;
     width: 100%;
-    height: 70vh;
-    max-height: 700px;
     animation: fadeIn 1.4s 0.5s ease both;
   }
   .hero-photo img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
+    height: auto;
+    display: block;
     /* The original photo is shot on pure black — blend with the page background so it appears cut-out */
     mix-blend-mode: lighten;
     filter: contrast(1.05) brightness(1.02);
@@ -332,9 +329,9 @@
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse at center, transparent 50%, var(--black) 95%),
-      linear-gradient(to right, var(--black), transparent 8%, transparent 92%, var(--black)),
-      linear-gradient(to bottom, var(--black), transparent 8%, transparent 80%, var(--black));
+      radial-gradient(ellipse at center, transparent 38%, var(--black) 78%),
+      linear-gradient(to right, var(--black), transparent 5%, transparent 95%, var(--black)),
+      linear-gradient(to bottom, var(--black), transparent 5%, transparent 91%, var(--black));
     pointer-events: none;
   }
   /* Soft amber spotlight behind the photo */
@@ -924,22 +921,16 @@
     .hero { padding: 5rem 1.5rem 3rem; min-height: auto; }
     .hero-inner { grid-template-columns: 1fr; gap: 1.5rem; }
     .hero-photo {
-      height: auto;
-      aspect-ratio: 3 / 2;
-      max-height: 50vh;
       order: -1;
       margin: 0 -1.5rem;
       width: calc(100% + 3rem);
     }
-    .hero-photo img {
-      object-fit: cover;
-      object-position: center 30%;
-    }
     /* Faded border on all sides for mobile */
     .hero-photo::after {
       background:
-        linear-gradient(to bottom, var(--black), transparent 20%, transparent 75%, var(--black)),
-        linear-gradient(to right, var(--black), transparent 12%, transparent 88%, var(--black));
+        radial-gradient(ellipse at center, transparent 38%, var(--black) 78%),
+        linear-gradient(to bottom, var(--black), transparent 5%, transparent 90%, var(--black)),
+        linear-gradient(to right, var(--black), transparent 5%, transparent 95%, var(--black));
     }
     .hero-photo::before { display: none; }
     .hero-title { font-size: clamp(3.5rem, 14vw, 5rem); }
@@ -1211,12 +1202,7 @@
         Legal basis: Art. 6(1)(f) GDPR (legitimate interest in secure operation). Data is deleted after 7 days. More info: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#data-collection" target="_blank" rel="noopener">GitHub Pages privacy</a>.
       </p>
 
-      <h3>4. Fonts</h3>
-      <p>
-        This site uses self-hosted web fonts (Bebas Neue, DM Mono, Playfair Display). The font files are served directly from our hosting provider alongside all other page assets. No data is transmitted to Google or any third-party font service.
-      </p>
-
-      <h3>5. Contact form (Formspree)</h3>
+      <h3>4. Contact form (Formspree)</h3>
       <p>
         When you use our contact form, the data you enter (<strong>name, email address, message</strong>) is transmitted to us via <strong>Formspree</strong> (Formspree, Inc., USA), which stores data on US servers and is certified under the EU–US Data Privacy Framework.
       </p>
@@ -1224,15 +1210,15 @@
         Legal basis: Art. 6(1)(b) GDPR (pre-contractual measures) / Art. 6(1)(f) GDPR (legitimate interest in handling enquiries). Your data is used solely to respond to your message and deleted thereafter. More info: <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener">Formspree Privacy Policy</a>.
       </p>
 
-      <h3>6. Social media (Instagram)</h3>
+      <h3>5. Social media (Instagram)</h3>
       <p>
         This site contains a link to our Instagram profile. It is a plain hyperlink — no Instagram plugins or tracking code is embedded. Clicking the link takes you to Instagram, where Meta Platforms Ireland Ltd.'s privacy policy applies.
       </p>
 
-      <h3>7. Cookies</h3>
+      <h3>6. Cookies</h3>
       <p>This website uses no cookies and no tracking of any kind.</p>
 
-      <h3>8. Your rights</h3>
+      <h3>7. Your rights</h3>
       <p>Under the GDPR you have the right to:</p>
       <ul>
         <li><strong>Access</strong> (Art. 15): obtain confirmation of which data we hold about you.</li>
@@ -1244,13 +1230,13 @@
       </ul>
       <p>To exercise your rights, contact: <a data-legal="email-link"></a></p>
 
-      <h3>9. Right to lodge a complaint</h3>
+      <h3>8. Right to lodge a complaint</h3>
       <p>
         You have the right to lodge a complaint with a supervisory authority. The competent authority for Berlin is the <strong>Berliner Beauftragte für Datenschutz und Informationsfreiheit</strong>:<br>
         <a href="https://www.datenschutz-berlin.de" target="_blank" rel="noopener">www.datenschutz-berlin.de</a>
       </p>
 
-      <h3>10. Last updated</h3>
+      <h3>9. Last updated</h3>
       <p>May 2025. We reserve the right to update this policy as needed.</p>
 
     </div>
