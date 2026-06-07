@@ -879,7 +879,7 @@
     display: flex;
     gap: 1.5rem;
   }
-  .footer-legal button {
+  .footer-legal a {
     background: none;
     border: none;
     color: var(--muted);
@@ -887,13 +887,14 @@
     font-size: 0.58rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
+    text-decoration: none;
     cursor: none;
     padding: 0;
     transition: color 0.2s;
   }
-  .footer-legal button:hover { color: var(--gold); }
+  .footer-legal a:hover { color: var(--gold); }
   @media (max-width: 900px) {
-    .footer-legal button { cursor: pointer; }
+    .footer-legal a { cursor: pointer; }
     .modal { padding: 2rem 1.5rem; }
     .modal-backdrop { padding: 2rem 1rem 2rem; }
   }
@@ -1131,8 +1132,8 @@
   <div class="footer-copy">© 2025 Check la Lage. All rights reserved.</div>
   <div class="footer-city">Berlin · Germany</div>
   <div class="footer-legal">
-    <button onclick="openModal('imprintModal')">Legal Notice</button>
-    <button onclick="openModal('privacyModal')">Privacy Policy</button>
+    <a href="#imprint" onclick="openModal('imprintModal', event)">Legal Notice</a>
+    <a href="#privacy" onclick="openModal('privacyModal', event)">Privacy Policy</a>
   </div>
 </footer>
 
@@ -1284,19 +1285,32 @@
     });
   }
 
-  // Legal modals
-  function openModal(id) {
+  // Legal modals — deep-linkable via #imprint / #privacy
+  const MODAL_HASH = { imprintModal: 'imprint', privacyModal: 'privacy' };
+  const HASH_MODAL = { imprint: 'imprintModal', privacy: 'privacyModal' };
+
+  function openModal(id, event) {
+    if (event) event.preventDefault();
     const el = document.getElementById(id);
+    if (!el || el.classList.contains('open')) return;
     el.classList.add('open');
     document.body.style.overflow = 'hidden';
     el.addEventListener('keydown', trapFocus);
     el.querySelector('.modal-close').focus();
+    const hash = '#' + MODAL_HASH[id];
+    if (location.hash !== hash) history.pushState(null, '', hash);
   }
-  function closeModal(id) {
+  function closeModal(id, opts) {
     const el = document.getElementById(id);
+    if (!el || !el.classList.contains('open')) return;
     el.classList.remove('open');
     document.body.style.overflow = '';
     el.removeEventListener('keydown', trapFocus);
+    if (!opts || !opts.skipHash) {
+      if (location.hash === '#' + MODAL_HASH[id]) {
+        history.pushState(null, '', location.pathname + location.search);
+      }
+    }
   }
   function trapFocus(e) {
     if (e.key === 'Escape') closeModal(e.currentTarget.id);
@@ -1307,6 +1321,17 @@
       if (e.target === backdrop) closeModal(backdrop.id);
     });
   });
+  // Open/close in response to the URL hash (deep links + back/forward navigation)
+  function syncModalToHash() {
+    const key = location.hash.replace('#', '');
+    const targetId = HASH_MODAL[key];
+    Object.keys(MODAL_HASH).forEach(modalId => {
+      if (modalId === targetId) openModal(modalId);
+      else closeModal(modalId, { skipHash: true });
+    });
+  }
+  window.addEventListener('hashchange', syncModalToHash);
+  syncModalToHash(); // handle direct page load with #imprint / #privacy
 
   // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
