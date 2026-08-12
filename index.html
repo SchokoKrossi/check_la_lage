@@ -624,6 +624,94 @@
   }
   .no-course-cta:hover { opacity: 0.7; }
 
+  /* NEWSLETTER */
+  #newsletter { background: var(--stage); }
+  .newsletter-inner { max-width: 620px; }
+  .newsletter-sub {
+    font-size: 0.83rem;
+    color: var(--muted);
+    line-height: 1.9;
+    margin-bottom: 2.5rem;
+  }
+  .newsletter-fields {
+    display: flex;
+  }
+  .newsletter-email {
+    flex: 1;
+    background: var(--black);
+    border: 1px solid var(--warm);
+    border-right: none;
+    color: var(--cream);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    padding: 1rem 1.2rem;
+    outline: none;
+    transition: border-color 0.3s;
+    cursor: none;
+    min-width: 0;
+  }
+  .newsletter-email:focus { border-color: var(--amber); }
+  .newsletter-email::placeholder { color: var(--muted); opacity: 0.5; }
+  .newsletter-btn {
+    background: var(--gold);
+    color: var(--black);
+    border: none;
+    padding: 1rem 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: none;
+    transition: all 0.3s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .newsletter-btn:hover {
+    background: var(--amber);
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 var(--warm);
+  }
+  .newsletter-consent {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    margin-top: 1.2rem;
+    font-size: 0.63rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    line-height: 1.8;
+    cursor: none;
+  }
+  .newsletter-consent input[type="checkbox"] {
+    margin-top: 3px;
+    accent-color: var(--gold);
+    flex-shrink: 0;
+    cursor: none;
+  }
+  .newsletter-consent a {
+    color: var(--amber);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .newsletter-consent a:hover { border-color: var(--amber); }
+  .newsletter-status {
+    margin-top: 1rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    line-height: 1.7;
+    display: none;
+  }
+  .newsletter-status.success { color: var(--gold); display: block; }
+  .newsletter-status.error { color: var(--amber); display: block; }
+  @media (max-width: 900px) {
+    .newsletter-fields { flex-direction: column; }
+    .newsletter-email { border-right: 1px solid var(--warm); border-bottom: none; }
+    .newsletter-btn { width: 100%; cursor: pointer; transform: none !important; box-shadow: none !important; }
+    .newsletter-consent { cursor: pointer; }
+    .newsletter-consent input[type="checkbox"] { cursor: pointer; }
+  }
+
   /* CONTACT */
   #contact { background: var(--black); }
   .contact-layout {
@@ -1084,6 +1172,35 @@
 
 </section>
 
+<!-- NEWSLETTER -->
+<section id="newsletter">
+  <div class="section-label">Stay in the loop</div>
+  <div class="newsletter-inner reveal">
+    <h2 class="section-title">Never Miss<br>a Show</h2>
+    <p class="newsletter-sub">
+      Upcoming shows, new courses, the occasional backstage update — straight to your inbox. No spam, easy unsubscribe.
+    </p>
+    <form id="newsletterForm">
+      <div class="newsletter-fields">
+        <input
+          class="newsletter-email"
+          type="email"
+          name="EMAIL"
+          placeholder="your@email.com"
+          autocomplete="email"
+          required
+        />
+        <button type="submit" class="newsletter-btn" id="newsletterBtn">Subscribe</button>
+      </div>
+      <label class="newsletter-consent">
+        <input type="checkbox" name="OPT_IN" required />
+        I agree to receive emails from Check la Lage and have read the <a href="#privacy" onclick="event.stopPropagation()">Privacy Policy</a>.
+      </label>
+      <div class="newsletter-status" id="newsletterStatus"></div>
+    </form>
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section id="contact">
   <div class="section-label">Get in touch</div>
@@ -1211,15 +1328,23 @@
         Legal basis: Art. 6(1)(b) GDPR (pre-contractual measures) / Art. 6(1)(f) GDPR (legitimate interest in handling enquiries). Your data is used solely to respond to your message and deleted thereafter. More info: <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener">Formspree Privacy Policy</a>.
       </p>
 
-      <h3>5. Social media (Instagram)</h3>
+      <h3>5. Newsletter (Brevo)</h3>
+      <p>
+        If you subscribe to our newsletter, your <strong>email address</strong> is transmitted to and stored by <strong>Brevo SAS</strong> (55 rue d'Amsterdam, 75008 Paris, France). Brevo is an EU-based service and processes data in accordance with the GDPR.
+      </p>
+      <p>
+        We use a <strong>double opt-in</strong> process: you will receive a confirmation email and must click the link inside to activate your subscription. Legal basis: Art. 6(1)(a) GDPR (consent). You can unsubscribe at any time via the link in every newsletter. More info: <a href="https://www.brevo.com/legal/privacypolicy/" target="_blank" rel="noopener">Brevo Privacy Policy</a>.
+      </p>
+
+      <h3>6. Social media (Instagram)</h3>
       <p>
         This site contains a link to our Instagram profile. It is a plain hyperlink — no Instagram plugins or tracking code is embedded. Clicking the link takes you to Instagram, where Meta Platforms Ireland Ltd.'s privacy policy applies.
       </p>
 
-      <h3>6. Cookies</h3>
+      <h3>7. Cookies</h3>
       <p>This website uses no cookies and no tracking of any kind.</p>
 
-      <h3>7. Your rights</h3>
+      <h3>8. Your rights</h3>
       <p>Under the GDPR you have the right to:</p>
       <ul>
         <li><strong>Access</strong> (Art. 15): obtain confirmation of which data we hold about you.</li>
@@ -1231,14 +1356,14 @@
       </ul>
       <p>To exercise your rights, contact: <a data-legal="email-link"></a></p>
 
-      <h3>8. Right to lodge a complaint</h3>
+      <h3>9. Right to lodge a complaint</h3>
       <p>
         You have the right to lodge a complaint with a supervisory authority. The competent authority for Berlin is the <strong>Berliner Beauftragte für Datenschutz und Informationsfreiheit</strong>:<br>
         <a href="https://www.datenschutz-berlin.de" target="_blank" rel="noopener">www.datenschutz-berlin.de</a>
       </p>
 
-      <h3>9. Last updated</h3>
-      <p>May 2025. We reserve the right to update this policy as needed.</p>
+      <h3>10. Last updated</h3>
+      <p>May 2026. We reserve the right to update this policy as needed.</p>
 
     </div>
   </div>
@@ -1332,6 +1457,33 @@
   }
   window.addEventListener('hashchange', syncModalToHash);
   syncModalToHash(); // handle direct page load with #imprint / #privacy
+
+  // Newsletter — submits to Brevo embedded form endpoint
+  const BREVO_FORM_URL = 'YOUR_BREVO_FORM_URL'; // ← paste the action URL from your Brevo embedded form here
+
+  const nlForm = document.getElementById('newsletterForm');
+  const nlBtn  = document.getElementById('newsletterBtn');
+  const nlStat = document.getElementById('newsletterStatus');
+
+  nlForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    nlBtn.disabled = true;
+    nlBtn.textContent = 'Subscribing…';
+    nlStat.className = 'newsletter-status';
+
+    try {
+      await fetch(BREVO_FORM_URL, { method: 'POST', mode: 'no-cors', body: new FormData(nlForm) });
+      nlStat.className = 'newsletter-status success';
+      nlStat.textContent = 'Almost there — check your inbox to confirm your subscription.';
+      nlForm.reset();
+    } catch {
+      nlStat.className = 'newsletter-status error';
+      nlStat.textContent = 'Something went wrong. Please try again.';
+    } finally {
+      nlBtn.disabled = false;
+      nlBtn.textContent = 'Subscribe';
+    }
+  });
 
   // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
