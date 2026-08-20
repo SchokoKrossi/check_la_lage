@@ -599,6 +599,16 @@
   }
   .no-course-cta:hover { opacity: 0.7; }
 
+  .no-show-text {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: center;
+    padding: 4rem 0;
+    border: 1px solid var(--warm);
+  }
+
   .course-note {
     font-size: 0.65rem;
     letter-spacing: 0.2em;
@@ -1058,9 +1068,10 @@
 <section id="shows">
   <div class="section-label">On stage</div>
   <h2 class="section-title reveal">Upcoming<br>Shows</h2>
+  <!-- SHOWS:BEGIN -->
   <div class="shows-grid reveal">
 
-    <div class="show-card">
+    <div class="show-card" data-date="2026-10-08">
       <div class="show-date">8</div>
       <div class="show-month">October · Thursday</div>
       <div class="show-venue">Café Engels</div>
@@ -1069,34 +1080,17 @@
       <a href="https://rausgegangen.de/en/events/check-la-lage-improv-show-0/" target="_blank" class="show-ticket-link">Get Tickets →</a>
     </div>
 
-    <div class="show-card">
+    <div class="show-card" data-date="2026-11-12">
       <div class="show-date">12</div>
       <div class="show-month">November · Thursday</div>
       <div class="show-venue">Café Engels</div>
       <div class="show-address">Herrfurthstraße 21, 12049 Berlin</div>
       <div class="show-location">5 € · 20:00</div>
-      <a href="https://rausgegangen.de/en/events/check-la-lage-improv-show-0/" target="_blank" class="show-ticket-link">Get Tickets →</a>
-    </div>
-
-    <div class="show-card">
-      <div class="show-date">10</div>
-      <div class="show-month">December · Thursday</div>
-      <div class="show-venue">Café Engels</div>
-      <div class="show-address">Herrfurthstraße 21, 12049 Berlin</div>
-      <div class="show-location">5 € · 20:00</div>
-      <a href="https://rausgegangen.de/en/events/check-la-lage-improv-show-0/" target="_blank" class="show-ticket-link">Get Tickets →</a>
-    </div>
-
-    <div class="show-card">
-      <div class="show-date">14</div>
-      <div class="show-month">January · Thursday</div>
-      <div class="show-venue">Café Engels</div>
-      <div class="show-address">Herrfurthstraße 21, 12049 Berlin</div>
-      <div class="show-location">5 € · 20:00</div>
-      <a href="https://rausgegangen.de/en/events/check-la-lage-improv-show-0/" target="_blank" class="show-ticket-link">Get Tickets →</a>
+      <a href="https://rausgegangen.de/en/events/check-la-lage-improv-show-2/" target="_blank" class="show-ticket-link">Get Tickets →</a>
     </div>
 
   </div>
+  <!-- SHOWS:END -->
 </section>
 
 <!-- COURSES -->
@@ -1104,44 +1098,46 @@
   <div class="section-label">Learn improv</div>
   <h2 class="section-title reveal">Improv<br>Courses</h2>
 
+  <!-- COURSES:BEGIN -->
   <div class="shows-grid">
-    <div class="show-card reveal">
+    <div class="show-card reveal" data-date="2026-09-14">
       <span class="show-tag">Improv Playground · Open Level</span>
       <div class="show-date">14</div>
       <div class="show-month">September · Monday</div>
       <div class="show-venue">Hotel Continental</div>
       <div class="show-address">ArtSpaceInExile · Berlin</div>
-      <div class="show-location">20 € per session</div>
-      <a href="https://rausgegangen.de/en/organizations/improv-berlin/" target="_blank" class="show-ticket-link">Book a Spot →</a>
+      <div class="show-location">20 € per session · 19:00</div>
+      <a href="https://rausgegangen.de/en/events/improv-playground-0/" target="_blank" class="show-ticket-link">Book a Spot →</a>
     </div>
-    <div class="show-card reveal">
+    <div class="show-card reveal" data-date="2026-09-21">
       <span class="show-tag">Improv Playground · Open Level</span>
       <div class="show-date">21</div>
       <div class="show-month">September · Monday</div>
       <div class="show-venue">Hotel Continental</div>
       <div class="show-address">ArtSpaceInExile · Berlin</div>
-      <div class="show-location">20 € per session</div>
-      <a href="https://rausgegangen.de/en/organizations/improv-berlin/" target="_blank" class="show-ticket-link">Book a Spot →</a>
+      <div class="show-location">20 € per session · 19:00</div>
+      <a href="https://rausgegangen.de/en/events/improv-playground-1/" target="_blank" class="show-ticket-link">Book a Spot →</a>
     </div>
-    <div class="show-card reveal">
+    <div class="show-card reveal" data-date="2026-09-28">
       <span class="show-tag">Improv Playground · Open Level</span>
       <div class="show-date">28</div>
       <div class="show-month">September · Monday</div>
       <div class="show-venue">Hotel Continental</div>
       <div class="show-address">ArtSpaceInExile · Berlin</div>
-      <div class="show-location">20 € per session</div>
-      <a href="https://rausgegangen.de/en/organizations/improv-berlin/" target="_blank" class="show-ticket-link">Book a Spot →</a>
+      <div class="show-location">20 € per session · 19:00</div>
+      <a href="https://rausgegangen.de/en/events/improv-playground-2/" target="_blank" class="show-ticket-link">Book a Spot →</a>
     </div>
-    <div class="show-card reveal">
+    <div class="show-card reveal" data-date="2026-10-05">
       <span class="show-tag">Improv Playground · Open Level</span>
       <div class="show-date">5</div>
       <div class="show-month">October · Monday</div>
       <div class="show-venue">Hotel Continental</div>
       <div class="show-address">ArtSpaceInExile · Berlin</div>
-      <div class="show-location">20 € per session</div>
-      <a href="https://rausgegangen.de/en/organizations/improv-berlin/" target="_blank" class="show-ticket-link">Book a Spot →</a>
+      <div class="show-location">20 € per session · 19:00</div>
+      <a href="https://rausgegangen.de/en/events/improv-playground-3/" target="_blank" class="show-ticket-link">Book a Spot →</a>
     </div>
   </div>
+  <!-- COURSES:END -->
   <p class="course-note reveal">Runs every Monday · 19:00 · through December 2026</p>
 
 </section>
@@ -1413,6 +1409,24 @@
     });
   })();
   // ─────────────────────────────────────────────────────────────────────────
+
+  // Hide past cards and cap visible count per section
+  (function() {
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    function filterSection(id, max, emptyMsg) {
+      const section = document.getElementById(id);
+      if (!section) return;
+      const cards = Array.from(section.querySelectorAll('.show-card[data-date]'));
+      cards.forEach(c => { if (new Date(c.dataset.date) < today) c.remove(); });
+      Array.from(section.querySelectorAll('.show-card[data-date]')).slice(max).forEach(c => c.remove());
+      const grid = section.querySelector('.shows-grid');
+      if (grid && !grid.querySelector('.show-card')) {
+        grid.outerHTML = '<p class="no-show-text">' + emptyMsg + '</p>';
+      }
+    }
+    filterSection('shows', 2, 'No upcoming shows scheduled — check back soon!');
+    filterSection('courses', 4, 'No upcoming sessions scheduled — check back soon!');
+  })();
 
   // Legal modals — deep-linkable via #imprint / #privacy
   const MODAL_HASH = { imprintModal: 'imprint', privacyModal: 'privacy' };
