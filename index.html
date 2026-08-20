@@ -116,32 +116,7 @@
     color: var(--cream);
     font-family: 'DM Mono', monospace;
     font-weight: 300;
-    cursor: none;
     overflow-x: hidden;
-  }
-
-  /* Custom cursor */
-  .cursor {
-    position: fixed;
-    width: 12px; height: 12px;
-    background: var(--gold);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: transform 0.1s, width 0.2s, height 0.2s, opacity 0.2s;
-    mix-blend-mode: difference;
-  }
-  .cursor-ring {
-    position: fixed;
-    width: 40px; height: 40px;
-    border: 1px solid var(--amber);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9998;
-    transform: translate(-50%, -50%);
-    transition: transform 0.15s ease, width 0.3s, height 0.3s, opacity 0.3s;
-    opacity: 0.5;
   }
 
   /* Grain overlay */
@@ -285,7 +260,7 @@
     text-transform: uppercase;
     text-decoration: none;
     transition: all 0.3s;
-    cursor: none;
+    cursor: pointer;
     border: none;
   }
   .btn-primary {
@@ -465,7 +440,7 @@
   .show-ticket-link:hover { border-color: var(--gold); }
 
   /* ABOUT */
-  #about { background: var(--black); }
+  #about { background: var(--deep); }
   .about-layout {
     display: grid;
     grid-template-columns: 1fr 1.4fr;
@@ -570,7 +545,7 @@
   }
 
   /* COURSES */
-  #courses { background: var(--deep); }
+  #courses { background: var(--black); }
 
   .no-course-banner {
     border: 1px solid var(--warm);
@@ -656,7 +631,7 @@
     padding: 1rem 1.2rem;
     outline: none;
     transition: border-color 0.3s;
-    cursor: none;
+    cursor: text;
     min-width: 0;
   }
   .newsletter-email:focus { border-color: var(--amber); }
@@ -670,7 +645,7 @@
     font-size: 0.7rem;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    cursor: none;
+    cursor: pointer;
     transition: all 0.3s;
     white-space: nowrap;
     flex-shrink: 0;
@@ -689,13 +664,13 @@
     color: var(--muted);
     letter-spacing: 0.05em;
     line-height: 1.8;
-    cursor: none;
+    cursor: pointer;
   }
   .newsletter-consent input[type="checkbox"] {
     margin-top: 3px;
     accent-color: var(--gold);
     flex-shrink: 0;
-    cursor: none;
+    cursor: pointer;
   }
   .newsletter-consent a {
     color: var(--amber);
@@ -794,7 +769,7 @@
     outline: none;
     transition: border-color 0.3s;
     width: 100%;
-    cursor: none;
+    cursor: text;
   }
   .form-input:focus, .form-textarea:focus { border-color: var(--amber); }
   .form-textarea { resize: vertical; min-height: 140px; font-family: 'DM Mono', monospace; }
@@ -809,7 +784,7 @@
     font-size: 0.7rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
-    cursor: none;
+    cursor: pointer;
     transition: all 0.3s;
     align-self: flex-start;
   }
@@ -1036,17 +1011,11 @@
     .about-layout, .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
     .shows-grid { grid-template-columns: 1fr; }
     footer { flex-direction: column; gap: 1rem; text-align: center; justify-content: center; }
-    body { cursor: auto; }
-    .cursor, .cursor-ring { display: none; }
-    .btn, a, button { cursor: pointer; }
-    .form-input, .form-textarea { cursor: text; }
   }
 </style>
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
 
 <!-- NAV -->
 <nav>
@@ -1149,6 +1118,24 @@
       <span class=”show-tag”>Improv Playground · Open Level</span>
       <div class=”show-date”>21</div>
       <div class=”show-month”>September · Monday</div>
+      <div class=”show-venue”>Hotel Continental</div>
+      <div class=”show-address”>ArtSpaceInExile · Berlin</div>
+      <div class=”show-location”>20 € per session</div>
+      <a href=”https://rausgegangen.de/en/organizations/improv-berlin/” target=”_blank” class=”show-ticket-link”>Book a Spot →</a>
+    </div>
+    <div class=”show-card reveal”>
+      <span class=”show-tag”>Improv Playground · Open Level</span>
+      <div class=”show-date”>28</div>
+      <div class=”show-month”>September · Monday</div>
+      <div class=”show-venue”>Hotel Continental</div>
+      <div class=”show-address”>ArtSpaceInExile · Berlin</div>
+      <div class=”show-location”>20 € per session</div>
+      <a href=”https://rausgegangen.de/en/organizations/improv-berlin/” target=”_blank” class=”show-ticket-link”>Book a Spot →</a>
+    </div>
+    <div class=”show-card reveal”>
+      <span class=”show-tag”>Improv Playground · Open Level</span>
+      <div class=”show-date”>5</div>
+      <div class=”show-month”>October · Monday</div>
       <div class=”show-venue”>Hotel Continental</div>
       <div class=”show-address”>ArtSpaceInExile · Berlin</div>
       <div class=”show-location”>20 € per session</div>
@@ -1426,25 +1413,6 @@
     });
   })();
   // ─────────────────────────────────────────────────────────────────────────
-
-  // Custom cursor (desktop only)
-  if (window.matchMedia('(min-width: 901px)').matches) {
-    const cursor = document.getElementById('cursor');
-    const ring = document.getElementById('cursorRing');
-    let mx = 0, my = 0, rx = 0, ry = 0;
-    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-    function animateCursor() {
-      cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
-      rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
-      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-      requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
-    document.querySelectorAll('a, button, .show-card').forEach(el => {
-      el.addEventListener('mouseenter', () => { cursor.style.width = '20px'; cursor.style.height = '20px'; ring.style.width = '60px'; ring.style.height = '60px'; });
-      el.addEventListener('mouseleave', () => { cursor.style.width = '12px'; cursor.style.height = '12px'; ring.style.width = '40px'; ring.style.height = '40px'; });
-    });
-  }
 
   // Legal modals — deep-linkable via #imprint / #privacy
   const MODAL_HASH = { imprintModal: 'imprint', privacyModal: 'privacy' };
