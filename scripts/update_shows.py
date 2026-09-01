@@ -75,6 +75,10 @@ def scrape_shows(max_count: int) -> list[dict]:
     today = date.today()
     soup  = fetch_soup(SHOWS_URL)
     urls  = collect_urls(soup, r"check-la-lage-improv-show-\d+/?$")
+    # The starting page rarely links to itself — prepend it so it's always checked
+    base = SHOWS_URL if SHOWS_URL.endswith("/") else SHOWS_URL + "/"
+    if not any(u.rstrip("/") == base.rstrip("/") for u in urls):
+        urls = [SHOWS_URL] + urls
     print(f"  found {len(urls)} show URL(s)")
 
     shows = []
