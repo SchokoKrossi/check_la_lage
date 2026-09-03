@@ -1,3 +1,4 @@
+import sys
 from pathlib import Path
 
 import qrcode
@@ -6,9 +7,9 @@ from PIL import Image
 
 repo_root = Path(__file__).resolve().parents[2]
 
-url = "https://checklaimpro.de/qr/"
+url = sys.argv[1] if len(sys.argv) > 1 else "https://checklaimpro.de/qr/"
+output_path = Path(sys.argv[2]) if len(sys.argv) > 2 else repo_root / "checklaimpro_qr.png"
 logo_path = repo_root / "images" / "logo.png"
-output_path = repo_root / "checklaimpro_qr.png"
 
 qr = qrcode.QRCode(
     version=1,

@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Check la Lage</title>
 <script>
-  var DESTINATION = "https://checklaimpro.de/#shows";
+  var DESTINATION = "https://checklaimpro.de/#courses";
   var LOGGER_URL = "https://script.google.com/macros/s/AKfycbwhARjOjsfwSHknkYurPc7aXna9aKhBo5VP80T-RVaIhTU9G65C62a0jzRZb7cAy0A_9Q/exec";
 
   try {
-    fetch(LOGGER_URL + "?qr=shows&ua=" + encodeURIComponent(navigator.userAgent), {
+    fetch(LOGGER_URL + "?qr=courses&ua=" + encodeURIComponent(navigator.userAgent), {
       mode: "no-cors",
       keepalive: true
     });
@@ -19,6 +19,6 @@
 </script>
 </head>
 <body>
-  <p>Redirecting to <a href="https://checklaimpro.de/">checklaimpro.de</a>…</p>
+  <p>Redirecting to <a href="https://checklaimpro.de/#courses">checklaimpro.de</a>…</p>
 </body>
 </html>
