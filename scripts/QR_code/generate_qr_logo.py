@@ -8,7 +8,8 @@ from PIL import Image
 repo_root = Path(__file__).resolve().parents[2]
 
 transparent = "--transparent" in sys.argv
-args = [a for a in sys.argv[1:] if a != "--transparent"]
+no_logo = "--no-logo" in sys.argv
+args = [a for a in sys.argv[1:] if a not in ("--transparent", "--no-logo")]
 
 url = args[0] if len(args) > 0 else "https://checklaimpro.de/qr/"
 output_path = Path(args[1]) if len(args) > 1 else Path(__file__).resolve().parent / "images" / "checklaimpro_qr.png"
@@ -26,26 +27,27 @@ qr.make(fit=True)
 qr_img = qr.make_image(fill_color="black", back_color="white").convert("RGBA")
 qr_width, qr_height = qr_img.size
 
-logo = Image.open(logo_path).convert("RGBA")
+if not no_logo:
+    logo = Image.open(logo_path).convert("RGBA")
 
-# Logo (plus its black backdrop) should cover roughly 25% of the QR code width.
-patch_size = qr_width // 4
-padding = patch_size // 10  # margin of black showing around the logo
+    # Logo (plus its black backdrop) should cover roughly 25% of the QR code width.
+    patch_size = qr_width // 4
+    padding = patch_size // 10  # margin of black showing around the logo
 
-logo.thumbnail((patch_size - 2 * padding, patch_size - 2 * padding), Image.LANCZOS)
+    logo.thumbnail((patch_size - 2 * padding, patch_size - 2 * padding), Image.LANCZOS)
 
-backdrop = Image.new("RGBA", (patch_size, patch_size), (0, 0, 0, 255))
-logo_pos = (
-    (patch_size - logo.width) // 2,
-    (patch_size - logo.height) // 2,
-)
-backdrop.paste(logo, logo_pos, logo)
+    backdrop = Image.new("RGBA", (patch_size, patch_size), (0, 0, 0, 255))
+    logo_pos = (
+        (patch_size - logo.width) // 2,
+        (patch_size - logo.height) // 2,
+    )
+    backdrop.paste(logo, logo_pos, logo)
 
-patch_pos = (
-    (qr_width - patch_size) // 2,
-    (qr_height - patch_size) // 2,
-)
-qr_img.paste(backdrop, patch_pos)
+    patch_pos = (
+        (qr_width - patch_size) // 2,
+        (qr_height - patch_size) // 2,
+    )
+    qr_img.paste(backdrop, patch_pos)
 
 if transparent:
     pixels = qr_img.load()
@@ -56,4 +58,4 @@ if transparent:
                 pixels[x, y] = (255, 255, 255, 0)
 
 qr_img.save(output_path)
-print(f"QR code with logo saved as {output_path}")
+print(f"QR code saved as {output_path}")
