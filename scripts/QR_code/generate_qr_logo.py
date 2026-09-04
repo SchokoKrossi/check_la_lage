@@ -7,8 +7,11 @@ from PIL import Image
 
 repo_root = Path(__file__).resolve().parents[2]
 
-url = sys.argv[1] if len(sys.argv) > 1 else "https://checklaimpro.de/qr/"
-output_path = Path(sys.argv[2]) if len(sys.argv) > 2 else repo_root / "checklaimpro_qr.png"
+transparent = "--transparent" in sys.argv
+args = [a for a in sys.argv[1:] if a != "--transparent"]
+
+url = args[0] if len(args) > 0 else "https://checklaimpro.de/qr/"
+output_path = Path(args[1]) if len(args) > 1 else Path(__file__).resolve().parent / "images" / "checklaimpro_qr.png"
 logo_path = repo_root / "images" / "logo.png"
 
 qr = qrcode.QRCode(
@@ -43,6 +46,14 @@ patch_pos = (
     (qr_height - patch_size) // 2,
 )
 qr_img.paste(backdrop, patch_pos)
+
+if transparent:
+    pixels = qr_img.load()
+    for y in range(qr_height):
+        for x in range(qr_width):
+            r, g, b, a = pixels[x, y]
+            if r > 200 and g > 200 and b > 200:
+                pixels[x, y] = (255, 255, 255, 0)
 
 qr_img.save(output_path)
 print(f"QR code with logo saved as {output_path}")
