@@ -1,6 +1,6 @@
 import qrcode
 
-url = "https://checklaimpro.de/qr/"
+url = "https://checklaimpro.de/qr/s/"
 
 qr = qrcode.QRCode(
     version=1,

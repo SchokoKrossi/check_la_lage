@@ -1,7 +1,7 @@
 import qrcode
 from PIL import Image, ImageDraw, ImageFont
 
-url = "https://checklaimpro.de/qr/"
+url = "https://checklaimpro.de/qr/s/"
 output_path = "checklaimpro_qr.png"
 
 # --- Generate the QR code ---

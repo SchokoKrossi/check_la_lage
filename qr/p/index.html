@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Check la Lage</title>
+<script>
+  var DESTINATION = "https://checklaimpro.de/";
+  var LOGGER_URL = "https://script.google.com/macros/s/AKfycbwhARjOjsfwSHknkYurPc7aXna9aKhBo5VP80T-RVaIhTU9G65C62a0jzRZb7cAy0A_9Q/exec";
+
+  try {
+    fetch(LOGGER_URL + "?qr=poster&ua=" + encodeURIComponent(navigator.userAgent), {
+      mode: "no-cors",
+      keepalive: true
+    });
+  } catch (e) {}
+
+  window.location.replace(DESTINATION);
+</script>
+</head>
+<body>
+  <p>Redirecting to <a href="https://checklaimpro.de/">checklaimpro.de</a>…</p>
+</body>
+</html>
