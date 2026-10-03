@@ -4,6 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Check la Lage – Improv Theatre Berlin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   /* Bebas Neue 400 */
   @font-face {
@@ -114,8 +117,8 @@
   body {
     background: var(--black);
     color: var(--cream);
-    font-family: 'DM Mono', monospace;
-    font-weight: 300;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 400;
     overflow-x: hidden;
   }
 
@@ -237,7 +240,7 @@
     margin-top: 2rem;
     font-size: 0.85rem;
     color: var(--muted);
-    letter-spacing: 0.08em;
+    letter-spacing: 0.02em;
     max-width: 420px;
     line-height: 1.9;
     animation: fadeUp 1s 0.3s ease both;
@@ -254,7 +257,7 @@
   .btn {
     display: inline-block;
     padding: 0.85rem 2.2rem;
-    font-family: 'DM Mono', monospace;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 0.7rem;
     letter-spacing: 0.25em;
     text-transform: uppercase;
@@ -544,8 +547,20 @@
     color: var(--muted);
   }
 
-  /* COURSES */
+  /* COURSES / WAITLIST */
   #courses { background: var(--black); }
+
+  .waitlist-wrap {
+    max-width: 480px;
+    margin-top: 2.5rem;
+  }
+  .waitlist-text {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.9;
+    margin-bottom: 2rem;
+  }
+  .waitlist-form .form-submit { margin-top: 1.5rem; }
 
   .no-course-banner {
     border: 1px solid var(--warm);
@@ -636,7 +651,7 @@
     border: 1px solid var(--warm);
     border-right: none;
     color: var(--cream);
-    font-family: 'DM Mono', monospace;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 0.8rem;
     padding: 1rem 1.2rem;
     outline: none;
@@ -651,7 +666,7 @@
     color: var(--black);
     border: none;
     padding: 1rem 2rem;
-    font-family: 'DM Mono', monospace;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 0.7rem;
     letter-spacing: 0.25em;
     text-transform: uppercase;
@@ -773,7 +788,7 @@
     background: var(--stage);
     border: 1px solid var(--warm);
     color: var(--cream);
-    font-family: 'DM Mono', monospace;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 0.8rem;
     padding: 1rem 1.2rem;
     outline: none;
@@ -782,7 +797,7 @@
     cursor: text;
   }
   .form-input:focus, .form-textarea:focus { border-color: var(--amber); }
-  .form-textarea { resize: vertical; min-height: 140px; font-family: 'DM Mono', monospace; }
+  .form-textarea { resize: vertical; min-height: 140px; font-family: 'Plus Jakarta Sans', sans-serif; }
   .form-input::placeholder, .form-textarea::placeholder { color: var(--muted); opacity: 0.5; }
 
   .form-submit {
@@ -790,7 +805,7 @@
     color: var(--black);
     border: none;
     padding: 1rem 2.5rem;
-    font-family: 'DM Mono', monospace;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 0.7rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
@@ -965,7 +980,7 @@
     background: none;
     border: none;
     color: var(--muted);
-    font-family: 'DM Mono', monospace;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 0.58rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -1055,7 +1070,7 @@
       </p>
       <div class="hero-cta">
         <a href="#shows" class="btn btn-primary">Upcoming shows</a>
-        <a href="#courses" class="btn btn-ghost">Improv workshops</a>
+        <a href="#courses" class="btn btn-ghost">Join the Waitlist</a>
       </div>
     </div>
     <div class="hero-photo">
@@ -1095,55 +1110,29 @@
 
 <!-- COURSES -->
 <section id="courses">
-  <div class="section-label">Learn improv</div>
-  <h2 class="section-title reveal">Improv<br>Workshops</h2>
+  <div class="section-label">Improv Workshops</div>
+  <h2 class="section-title reveal">Be the First<br>to Know</h2>
 
-  <!-- COURSES:BEGIN -->
-  <div class="shows-grid">
-
-    <div class="show-card reveal" data-date="2026-09-14">
-      <span class="show-tag">Improv Playground · Open Level</span>
-      <div class="show-date">14</div>
-      <div class="show-month">September · Monday</div>
-      <div class="show-venue">Hotel Continental</div>
-      <div class="show-address">ArtSpaceInExile · Berlin</div>
-      <div class="show-location">20 € per session · 19:00</div>
-      <a href="https://rausgegangen.de/en/events/improv-playground-0/" target="_blank" class="show-ticket-link">Book a Spot →</a>
-    </div>
-
-    <div class="show-card reveal" data-date="2026-09-21">
-      <span class="show-tag">Improv Playground · Open Level</span>
-      <div class="show-date">21</div>
-      <div class="show-month">September · Monday</div>
-      <div class="show-venue">Hotel Continental</div>
-      <div class="show-address">ArtSpaceInExile · Berlin</div>
-      <div class="show-location">20 € per session · 19:00</div>
-      <a href="https://rausgegangen.de/en/events/improv-playground-1/" target="_blank" class="show-ticket-link">Book a Spot →</a>
-    </div>
-
-    <div class="show-card reveal" data-date="2026-09-28">
-      <span class="show-tag">Improv Playground · Open Level</span>
-      <div class="show-date">28</div>
-      <div class="show-month">September · Monday</div>
-      <div class="show-venue">Hotel Continental</div>
-      <div class="show-address">ArtSpaceInExile · Berlin</div>
-      <div class="show-location">20 € per session · 19:00</div>
-      <a href="https://rausgegangen.de/en/events/improv-playground-2/" target="_blank" class="show-ticket-link">Book a Spot →</a>
-    </div>
-
-    <div class="show-card reveal" data-date="2026-10-05">
-      <span class="show-tag">Improv Playground · Open Level</span>
-      <div class="show-date">5</div>
-      <div class="show-month">October · Monday</div>
-      <div class="show-venue">Hotel Continental</div>
-      <div class="show-address">ArtSpaceInExile · Berlin</div>
-      <div class="show-location">20 € per session · 19:00</div>
-      <a href="https://rausgegangen.de/en/events/improv-playground-3/" target="_blank" class="show-ticket-link">Book a Spot →</a>
-    </div>
-
+  <div class="waitlist-wrap reveal">
+    <p class="waitlist-text">Our workshops are currently on hold. Leave your email and we'll let you know as soon as a new series is scheduled.</p>
+    <form class="waitlist-form" id="waitlistForm">
+      <input type="hidden" name="_subject" value="Workshop Waitlist Signup" />
+      <div class="form-group">
+        <label class="form-label" for="wl-email">Your email</label>
+        <input class="form-input" type="email" id="wl-email" name="email" placeholder="your@email.com" autocomplete="email" required />
+      </div>
+      <label class="newsletter-consent">
+        <input type="checkbox" name="newsletter" id="wl-newsletter" />
+        Also subscribe me to the newsletter — shows, updates, no spam.
+      </label>
+      <label class="newsletter-consent">
+        <input type="checkbox" name="OPT_IN" required />
+        I agree to receive emails from Check la Lage and have read the <a href="#privacy" onclick="event.stopPropagation()">Privacy Policy</a>.
+      </label>
+      <button type="submit" class="form-submit" id="waitlistBtn">Join Waitlist</button>
+      <div class="form-status" id="waitlistStatus"></div>
+    </form>
   </div>
-  <!-- COURSES:END -->
-  <p class="course-note reveal">Runs every Monday · 19:00 · through December 2026</p>
 
 </section>
 
@@ -1430,7 +1419,6 @@
       }
     }
     filterSection('shows', 2, 'No upcoming shows scheduled — check back soon!');
-    filterSection('courses', 4, 'No upcoming sessions scheduled — check back soon!');
   })();
 
   // Legal modals — deep-linkable via #imprint / #privacy
@@ -1505,6 +1493,52 @@
     } finally {
       nlBtn.disabled = false;
       nlBtn.textContent = 'Subscribe';
+    }
+  });
+
+  // Waitlist form — Formspree + optional Brevo newsletter signup
+  const wlForm   = document.getElementById('waitlistForm');
+  const wlBtn    = document.getElementById('waitlistBtn');
+  const wlStat   = document.getElementById('waitlistStatus');
+
+  wlForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    wlBtn.disabled = true;
+    wlBtn.textContent = 'Joining…';
+    wlStat.className = 'form-status';
+    wlStat.textContent = '';
+
+    const email = wlForm.querySelector('#wl-email').value;
+    const wantsNewsletter = wlForm.querySelector('#wl-newsletter').checked;
+
+    try {
+      // Always save to waitlist via Formspree
+      const res = await fetch('https://formspree.io/f/meedvroz', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(wlForm),
+      });
+      if (!res.ok) throw new Error();
+
+      // Also subscribe to newsletter if opted in
+      if (wantsNewsletter) {
+        const nlData = new FormData();
+        nlData.append('EMAIL', email);
+        nlData.append('OPT_IN', '1');
+        await fetch(BREVO_FORM_URL, { method: 'POST', mode: 'no-cors', body: nlData });
+      }
+
+      wlStat.className = 'form-status success';
+      wlStat.textContent = wantsNewsletter
+        ? 'You\'re on the list! Check your inbox to confirm the newsletter subscription.'
+        : 'You\'re on the list! We\'ll be in touch when workshops resume.';
+      wlForm.reset();
+    } catch {
+      wlStat.className = 'form-status error';
+      wlStat.textContent = 'Something went wrong. Please try again.';
+    } finally {
+      wlBtn.disabled = false;
+      wlBtn.textContent = 'Join Waitlist';
     }
   });
 
