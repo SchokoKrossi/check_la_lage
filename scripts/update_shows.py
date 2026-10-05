@@ -205,18 +205,10 @@ if __name__ == "__main__":
         print(f"ERROR scraping shows: {exc}")
         sys.exit(1)
 
-    print(f"\n=== Scraping courses ===")
-    try:
-        courses = scrape_courses(max_count=4)
-    except Exception as exc:
-        print(f"ERROR scraping courses: {exc}")
-        sys.exit(1)
-
     print(f"\n=== Updating index.html ===")
     content = INDEX_HTML.read_text(encoding="utf-8")
     try:
-        content = update_section(content, "<!-- SHOWS:BEGIN -->",   "<!-- SHOWS:END -->",   build_shows_html(shows))
-        content = update_section(content, "<!-- COURSES:BEGIN -->", "<!-- COURSES:END -->", build_courses_html(courses))
+        content = update_section(content, "<!-- SHOWS:BEGIN -->", "<!-- SHOWS:END -->", build_shows_html(shows))
     except ValueError as exc:
         print(f"ERROR: {exc}")
         sys.exit(1)
@@ -226,4 +218,4 @@ if __name__ == "__main__":
         print("No changes.")
     else:
         INDEX_HTML.write_text(content, encoding="utf-8")
-        print(f"Updated — {len(shows)} show(s), {len(courses)} course(s).")
+        print(f"Updated — {len(shows)} show(s).")
