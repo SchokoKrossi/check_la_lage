@@ -21,7 +21,7 @@ SHOW = {
     'date':         'Saturday, 23 August 2026',
     'time':         '20:00',
     'venue':        'Ballhaus Ost, Pappelallee 15, 10437 Berlin',
-    'tickets_url':  'https://schokokrossi.github.io/check_la_lage/#shows',
+    'tickets_url':  'https://checklaimpro.de/#shows',
     'description': (
         'We\'re back on stage and ready to surprise ourselves just as much as you. '
         'Bring your friends, your questions, and zero expectations — '
@@ -136,8 +136,8 @@ def build_html(show: dict) -> str:
               <div style="font-family:Arial,Helvetica,sans-serif; font-size:12px;
                           color:#3a3a3a; line-height:1.7;">
                 You're receiving this because you subscribed at
-                <a href="https://schokokrossi.github.io/check_la_lage/"
-                   style="color:#555555; text-decoration:none;">check-la-lage.de</a>.<br>
+                <a href="https://checklaimpro.de/"
+                   style="color:#555555; text-decoration:none;">checklaimpro.de</a>.<br>
                 <a href="{{{{unsubscribe}}}}" style="color:#555555;">Unsubscribe</a>
               </div>
             </td>

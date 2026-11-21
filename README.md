@@ -1,7 +1,7 @@
 # check_la_lage
 Website for improv theatre
 
-https://schokokrossi.github.io/check_la_lage
+https://checklaimpro.de
 
 TO DO:
 - imprint

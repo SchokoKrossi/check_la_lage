@@ -19,7 +19,7 @@ from pathlib import Path
 ROOT       = Path(__file__).parent.parent
 SHOWS_JSON = ROOT / "shows.json"
 INDEX_HTML = ROOT / "index.html"
-SITE_URL   = "https://schokokrossi.github.io/check_la_lage/"
+SITE_URL   = "https://checklaimpro.de/"
 MAX_SHOWS  = 2
 
 MONTHS   = ["January","February","March","April","May","June",
