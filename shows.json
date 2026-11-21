@@ -7,7 +7,47 @@
       "price": "5 € early bird · 8 €",
       "venue": "Café Engels",
       "address": "Herrfurthstraße 21, 12049 Berlin",
-      "ticket_url": "https://www.yesticket.org/event/de/check-la-lage-improv-show-10-12-26/"
+      "ticket_url": "https://www.yesticket.org/event/en/check-la-lage-improv-show-10-12-26/"
+    },
+    {
+      "date": "2027-01-14",
+      "time": "20:00",
+      "price": "5 € early bird · 8 €",
+      "venue": "Café Engels",
+      "address": "Herrfurthstraße 21, 12049 Berlin",
+      "ticket_url": "https://www.yesticket.org/event/en/check-la-lage-improv-show-14-01-27/"
+    },
+    {
+      "date": "2027-02-11",
+      "time": "20:00",
+      "price": "5 € early bird · 8 €",
+      "venue": "Café Engels",
+      "address": "Herrfurthstraße 21, 12049 Berlin",
+      "ticket_url": "https://www.yesticket.org/event/en/check-la-lage-improv-show-11-02-27/"
+    },
+    {
+      "date": "2027-03-11",
+      "time": "20:00",
+      "price": "5 € early bird · 8 €",
+      "venue": "Café Engels",
+      "address": "Herrfurthstraße 21, 12049 Berlin",
+      "ticket_url": "https://www.yesticket.org/event/en/check-la-lage-improv-show-11-03-27/"
+    },
+    {
+      "date": "2027-04-08",
+      "time": "20:00",
+      "price": "5 € early bird · 8 €",
+      "venue": "Café Engels",
+      "address": "Herrfurthstraße 21, 12049 Berlin",
+      "ticket_url": "https://www.yesticket.org/event/en/check-la-lage-improv-show-08-04-27/"
+    },
+    {
+      "date": "2027-05-13",
+      "time": "20:00",
+      "price": "5 € early bird · 8 €",
+      "venue": "Café Engels",
+      "address": "Herrfurthstraße 21, 12049 Berlin",
+      "ticket_url": "https://www.yesticket.org/event/en/check-la-lage-improv-show-13-05-27/"
     }
   ]
 }

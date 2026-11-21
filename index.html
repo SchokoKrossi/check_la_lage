@@ -35,7 +35,42 @@
     },
     "offers": {
       "@type": "Offer",
-      "url": "https://www.yesticket.org/event/de/check-la-lage-improv-show-10-12-26/",
+      "url": "https://www.yesticket.org/event/en/check-la-lage-improv-show-10-12-26/",
+      "price": "5",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock"
+    },
+    "organizer": {
+      "@type": "PerformingGroup",
+      "name": "Check la Lage",
+      "url": "https://checklaimpro.de/"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "TheaterEvent",
+    "name": "Check la Lage – Improv Show",
+    "description": "Unscripted improv theatre: every scene is made up on the spot from audience suggestions.",
+    "startDate": "2027-01-14T20:00:00+01:00",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "image": [
+      "https://checklaimpro.de/images/group-web.png"
+    ],
+    "location": {
+      "@type": "Place",
+      "name": "Café Engels",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Herrfurthstraße 21",
+        "postalCode": "12049",
+        "addressLocality": "Berlin",
+        "addressCountry": "DE"
+      }
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": "https://www.yesticket.org/event/en/check-la-lage-improv-show-14-01-27/",
       "price": "5",
       "priceCurrency": "EUR",
       "availability": "https://schema.org/InStock"
@@ -527,70 +562,78 @@
   }
   .show-ticket-link:hover { border-color: var(--gold); }
 
-  /* GALLERY */
-  #gallery { background: var(--black); }
-  .gallery-grid {
+  /* GALLERY — a few candid moments, editorial layout */
+  #gallery { background: var(--black); overflow: hidden; }
+  .moments {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: clamp(140px, 15vw, 260px);
-    gap: 6px;
-    grid-template-areas:
-      "a a b c"
-      "a a b d"
-      "e e f g";
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: 1.5rem;
+    align-items: start;
+    margin-top: 1rem;
   }
-  .g-a { grid-area: a; } .g-b { grid-area: b; } .g-c { grid-area: c; } .g-d { grid-area: d; }
-  .g-e { grid-area: e; } .g-f { grid-area: f; } .g-g { grid-area: g; }
+  .moment { margin: 0; position: relative; }
+  .moment-1 { grid-column: 1 / 8; grid-row: 1; }
+  .moment-quote { grid-column: 9 / 13; grid-row: 1; align-self: center; }
+  .moment-2 { grid-column: 4 / 9; grid-row: 2; margin-top: -7rem; }
+  .moment-3 { grid-column: 8 / 13; grid-row: 2; margin-top: -1rem; }
+
   .gallery-item {
-    position: relative;
-    overflow: hidden;
+    display: block;
+    width: 100%;
     padding: 0;
     border: none;
-    background: var(--stage);
+    background: transparent;
     cursor: zoom-in;
-    display: block;
   }
   .gallery-item img {
     width: 100%;
-    height: 100%;
+    aspect-ratio: 3 / 2;
     object-fit: cover;
     display: block;
-    filter: brightness(0.88) saturate(0.95);
-    transition: transform 0.6s ease, filter 0.4s ease;
+    -webkit-mask-image: radial-gradient(ellipse closest-side at 50% 50%, #000 58%, transparent 100%);
+            mask-image: radial-gradient(ellipse closest-side at 50% 50%, #000 58%, transparent 100%);
+    mix-blend-mode: lighten;
+    /* Warm black & white until the photo scrolls into view, then it comes to life */
+    filter: grayscale(1) sepia(0.25) contrast(1.08) brightness(0.85);
+    transform: scale(1.03);
+    transition: filter 1.6s ease, transform 1.6s ease;
   }
-  .g-b img { object-position: center 30%; }
-  .gallery-item::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    box-shadow: inset 0 0 0 1px var(--warm);
-    background: linear-gradient(to top, rgba(10,10,10,0.35), transparent 40%);
-    pointer-events: none;
-    transition: box-shadow 0.3s;
+  .moment.alive .gallery-item img,
+  .gallery-item:hover img,
+  .gallery-item:focus-visible img {
+    filter: grayscale(0) sepia(0) contrast(1.02) brightness(0.98);
+    transform: scale(1);
   }
-  .gallery-item:hover img, .gallery-item:focus-visible img {
-    transform: scale(1.04);
-    filter: brightness(1.05) saturate(1.05);
-  }
-  .gallery-item:hover::after, .gallery-item:focus-visible::after { box-shadow: inset 0 0 0 2px var(--gold); }
-  .gallery-item:focus-visible { outline: none; }
+  .gallery-item:focus-visible { outline: 1px dashed var(--gold); outline-offset: -12%; }
 
-  .gallery-cta {
-    margin-top: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem 3rem;
-    flex-wrap: wrap;
-  }
-  .gallery-cta p {
+  .moment-quote blockquote {
     font-family: 'Playfair Display', serif;
     font-style: italic;
-    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-size: clamp(1.4rem, 2.4vw, 2.1rem);
+    line-height: 1.35;
     color: var(--cream);
-    max-width: 560px;
-    line-height: 1.5;
   }
+  .moment-quote blockquote::before {
+    content: '“';
+    display: block;
+    font-size: 3em;
+    line-height: 0.6;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+  .moment-quote a {
+    display: inline-block;
+    margin-top: 1.8rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 1px solid var(--warm);
+    padding-bottom: 3px;
+    transition: border-color 0.3s;
+  }
+  .moment-quote a:hover { border-color: var(--gold); }
 
   .lightbox {
     border: none;
@@ -628,18 +671,12 @@
   .lightbox-next { right: 1.25rem; top: 50%; transform: translateY(-50%); }
 
   @media (max-width: 900px) {
-    .gallery-grid {
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 56vw 38vw 38vw 56vw 38vw;
-      gap: 4px;
-      grid-template-areas:
-        "a a"
-        "b c"
-        "b d"
-        "e e"
-        "f g";
-    }
-    .gallery-cta { margin-top: 2rem; }
+    .moments { display: flex; flex-direction: column; gap: 2.5rem; }
+    .moments { gap: 0; }
+    .moment-1 { margin: 0 -1.5rem; }
+    .moment-quote { padding: 0 0.5rem; margin: 1rem 0 2rem; }
+    .moment-2 { width: 92%; margin: 0 0 0 -1.5rem; }
+    .moment-3 { width: 92%; align-self: flex-end; margin: -3.5rem -1.5rem 0 0; }
     .lightbox-prev, .lightbox-next { top: auto; bottom: 1.5rem; transform: none; }
     .lightbox-prev { left: calc(50% - 56px); }
     .lightbox-next { right: calc(50% - 56px); }
@@ -1280,7 +1317,7 @@
         <div class="next-show-price">5 € early bird · 8 €</div>
       </div>
       <div class="hero-cta">
-        <a href="https://www.yesticket.org/event/de/check-la-lage-improv-show-10-12-26/" target="_blank" rel="noopener" class="btn btn-primary">Get Tickets</a>
+        <a href="https://www.yesticket.org/event/en/check-la-lage-improv-show-10-12-26/" target="_blank" rel="noopener" class="btn btn-primary">Get Tickets</a>
         <a href="#shows" class="btn btn-ghost">All dates</a>
       </div>
       <!-- HERO-NEXT:END -->
@@ -1305,7 +1342,16 @@
       <div class="show-venue">Café Engels</div>
       <div class="show-address">Herrfurthstraße 21, 12049 Berlin</div>
       <div class="show-location">5 € early bird · 8 € · 20:00</div>
-      <a href="https://www.yesticket.org/event/de/check-la-lage-improv-show-10-12-26/" target="_blank" rel="noopener" class="show-ticket-link">Get Tickets →</a>
+      <a href="https://www.yesticket.org/event/en/check-la-lage-improv-show-10-12-26/" target="_blank" rel="noopener" class="show-ticket-link">Get Tickets →</a>
+    </div>
+
+    <div class="show-card" data-date="2027-01-14">
+      <div class="show-date">14</div>
+      <div class="show-month">January · Thursday</div>
+      <div class="show-venue">Café Engels</div>
+      <div class="show-address">Herrfurthstraße 21, 12049 Berlin</div>
+      <div class="show-location">5 € early bird · 8 € · 20:00</div>
+      <a href="https://www.yesticket.org/event/en/check-la-lage-improv-show-14-01-27/" target="_blank" rel="noopener" class="show-ticket-link">Get Tickets →</a>
     </div>
 
   </div>
@@ -1314,34 +1360,28 @@
 
 <!-- GALLERY -->
 <section id="gallery">
-  <div class="section-label">Caught on stage</div>
+  <div class="section-label">Between the scenes</div>
   <h2 class="section-title reveal">No Script.<br>No Safety Net.</h2>
-  <div class="gallery-grid reveal">
-    <button class="gallery-item g-a" data-full="images/gallery/welcome-1600.jpg" aria-label="Open photo: the whole cast welcoming the audience">
-      <img src="images/gallery/welcome-800.jpg" srcset="images/gallery/welcome-800.jpg 800w, images/gallery/welcome-1600.jpg 1600w" sizes="(max-width: 900px) 100vw, 50vw" alt="The whole cast on stage, arms stretched out welcoming the audience" loading="lazy" decoding="async" />
-    </button>
-    <button class="gallery-item g-b" data-full="images/gallery/tower-1600.jpg" aria-label="Open photo: the cast stacked in a human tower">
-      <img src="images/gallery/tower-800.jpg" srcset="images/gallery/tower-800.jpg 533w, images/gallery/tower-1600.jpg 1067w" sizes="(max-width: 900px) 50vw, 25vw" alt="Five performers stacked on top of each other in a human tower, grinning" loading="lazy" decoding="async" />
-    </button>
-    <button class="gallery-item g-c" data-full="images/gallery/duo-1600.jpg" aria-label="Open photo: two performers mid-scene">
-      <img src="images/gallery/duo-800.jpg" srcset="images/gallery/duo-800.jpg 800w, images/gallery/duo-1600.jpg 1600w" sizes="(max-width: 900px) 50vw, 25vw" alt="Two performers mid-scene, one grinning while the other leans in" loading="lazy" decoding="async" />
-    </button>
-    <button class="gallery-item g-d" data-full="images/gallery/laugh-1600.jpg" aria-label="Open photo: five performers laughing in a line">
-      <img src="images/gallery/laugh-800.jpg" srcset="images/gallery/laugh-800.jpg 800w, images/gallery/laugh-1600.jpg 1600w" sizes="(max-width: 900px) 50vw, 25vw" alt="Five performers standing in a line, cracking up" loading="lazy" decoding="async" />
-    </button>
-    <button class="gallery-item g-e" data-full="images/gallery/scene-1600.jpg" aria-label="Open photo: the cast reacting in surprise">
-      <img src="images/gallery/scene-800.jpg" srcset="images/gallery/scene-800.jpg 800w, images/gallery/scene-1600.jpg 1600w" sizes="(max-width: 900px) 100vw, 50vw" alt="The cast on stage reacting with wide-eyed surprise" loading="lazy" decoding="async" />
-    </button>
-    <button class="gallery-item g-f" data-full="images/gallery/trio-1600.jpg" aria-label="Open photo: three performers in a scene">
-      <img src="images/gallery/trio-800.jpg" srcset="images/gallery/trio-800.jpg 800w, images/gallery/trio-1600.jpg 1600w" sizes="(max-width: 900px) 50vw, 25vw" alt="Three performers in a scene, one fixing another's hair" loading="lazy" decoding="async" />
-    </button>
-    <button class="gallery-item g-g" data-full="images/gallery/faces-1600.jpg" aria-label="Open photo: three performers pulling faces">
-      <img src="images/gallery/faces-800.jpg" srcset="images/gallery/faces-800.jpg 800w, images/gallery/faces-1600.jpg 1600w" sizes="(max-width: 900px) 50vw, 25vw" alt="Three performers close up, pulling faces at the camera" loading="lazy" decoding="async" />
-    </button>
-  </div>
-  <div class="gallery-cta reveal">
-    <p>Every scene happens once — then it's gone. Be in the room for the next one.</p>
-    <a href="#shows" class="btn btn-primary">See upcoming shows</a>
+  <div class="moments">
+    <figure class="moment moment-1">
+      <button class="gallery-item" data-full="images/gallery/laugh-1600.jpg" aria-label="Enlarge photo: Five performers on stage, cracking up at each other">
+        <img src="images/gallery/laugh-800.jpg" srcset="images/gallery/laugh-800.jpg 800w, images/gallery/laugh-1600.jpg 1600w" sizes="(max-width: 900px) 100vw, 58vw" alt="Five performers on stage, cracking up at each other" loading="lazy" decoding="async" />
+      </button>
+    </figure>
+    <div class="moment-quote reveal">
+      <blockquote>Every scene happens once — then it's gone.</blockquote>
+      <a href="#shows">Be in the room for the next one →</a>
+    </div>
+    <figure class="moment moment-2">
+      <button class="gallery-item" data-full="images/gallery/duo-1600.jpg" aria-label="Enlarge photo: Two performers mid-scene, one grinning while the other leans in">
+        <img src="images/gallery/duo-800.jpg" srcset="images/gallery/duo-800.jpg 800w, images/gallery/duo-1600.jpg 1600w" sizes="(max-width: 900px) 78vw, 33vw" alt="Two performers mid-scene, one grinning while the other leans in" loading="lazy" decoding="async" />
+      </button>
+    </figure>
+    <figure class="moment moment-3">
+      <button class="gallery-item" data-full="images/gallery/trio-1600.jpg" aria-label="Enlarge photo: Three performers in a scene, one fixing another's hair">
+        <img src="images/gallery/trio-800.jpg" srcset="images/gallery/trio-800.jpg 800w, images/gallery/trio-1600.jpg 1600w" sizes="(max-width: 900px) 78vw, 33vw" alt="Three performers in a scene, one fixing another's hair" loading="lazy" decoding="async" />
+      </button>
+    </figure>
   </div>
 </section>
 
@@ -1827,6 +1867,16 @@
       if (Math.abs(dx) > 50) show(idx + (dx < 0 ? 1 : -1));
       startX = null;
     });
+  })();
+
+  // Gallery photos fade from black & white into colour once they're in view
+  (function() {
+    const moments = document.querySelectorAll('.moment');
+    if (!('IntersectionObserver' in window)) { moments.forEach(m => m.classList.add('alive')); return; }
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('alive'); io.unobserve(e.target); } });
+    }, { threshold: 0.35 });
+    moments.forEach(m => io.observe(m));
   })();
 
   // Scroll reveal
