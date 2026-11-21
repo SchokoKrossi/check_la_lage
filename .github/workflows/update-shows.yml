@@ -1,8 +1,11 @@
 name: Update Shows
 
 on:
+  push:
+    branches: [main]
+    paths: ['shows.json', 'scripts/update_shows.py']
   schedule:
-    - cron: '0 7 * * *'   # runs daily at 07:00 UTC
+    - cron: '0 7 * * *'   # daily at 07:00 UTC, so past shows drop off the page
   workflow_dispatch:        # allows manual trigger from GitHub Actions tab
 
 jobs:
@@ -18,10 +21,7 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install dependencies
-        run: pip install requests beautifulsoup4
-
-      - name: Scrape and update shows
+      - name: Build shows from shows.json
         run: python scripts/update_shows.py
 
       - name: Commit if changed

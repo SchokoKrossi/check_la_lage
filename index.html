@@ -7,6 +7,48 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<meta name="description" content="Check la Lage – live improv comedy in Berlin-Neukölln. Unscripted scenes made from your suggestions, once a month at Café Engels." />
+<!-- EVENTS-LD:BEGIN -->
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "TheaterEvent",
+    "name": "Check la Lage – Improv Show",
+    "description": "Unscripted improv theatre: every scene is made up on the spot from audience suggestions.",
+    "startDate": "2026-12-10T20:00:00+01:00",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "image": [
+      "https://schokokrossi.github.io/check_la_lage/images/group-web.png"
+    ],
+    "location": {
+      "@type": "Place",
+      "name": "Café Engels",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Herrfurthstraße 21",
+        "postalCode": "12049",
+        "addressLocality": "Berlin",
+        "addressCountry": "DE"
+      }
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": "https://www.yesticket.org/event/de/check-la-lage-improv-show-10-12-26/",
+      "price": "5",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock"
+    },
+    "organizer": {
+      "@type": "PerformingGroup",
+      "name": "Check la Lage",
+      "url": "https://schokokrossi.github.io/check_la_lage/"
+    }
+  }
+]
+</script>
+<!-- EVENTS-LD:END -->
 <style>
   /* Bebas Neue 400 */
   @font-face {
@@ -252,6 +294,49 @@
     gap: 1.5rem;
     flex-wrap: wrap;
     animation: fadeUp 1s 0.45s ease both;
+  }
+
+  .next-show {
+    margin-top: 2rem;
+    padding: 1.2rem 1.5rem;
+    border-left: 3px solid var(--gold);
+    background: var(--spotlight);
+    max-width: 440px;
+    animation: fadeUp 1s 0.4s ease both;
+  }
+  .next-show-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 0.5rem;
+  }
+  .next-show-date {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.9rem;
+    line-height: 1.05;
+    letter-spacing: 0.03em;
+    color: var(--cream);
+  }
+  .next-show-venue {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 0.4rem;
+    line-height: 1.6;
+  }
+  .next-show-price {
+    font-size: 0.8rem;
+    color: var(--gold);
+    margin-top: 0.4rem;
+    letter-spacing: 0.05em;
+  }
+  .next-show + .hero-cta { margin-top: 1.5rem; }
+  .hero-note {
+    margin-top: 1.5rem;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+    animation: fadeUp 1s 0.55s ease both;
   }
 
   .btn {
@@ -1066,12 +1151,21 @@
         <span>la Lage</span>
       </h1>
       <p class="hero-sub">
-        A Berlin-based improv theatre group bringing dynamic, unscripted performances to the stage — at least once a month.
+        Live comedy with no script. You shout out suggestions, we turn them into scenes on the spot — every show is different and never seen again.
       </p>
-      <div class="hero-cta">
-        <a href="#shows" class="btn btn-primary">Upcoming shows</a>
-        <a href="#courses" class="btn btn-ghost">Join the Waitlist</a>
+      <!-- HERO-NEXT:BEGIN -->
+      <div class="next-show" data-date="2026-12-10">
+        <div class="next-show-label">Next show</div>
+        <div class="next-show-date">Thursday, 10 December · 20:00</div>
+        <div class="next-show-venue">Café Engels · Herrfurthstraße 21, 12049 Berlin</div>
+        <div class="next-show-price">5 € early bird · 8 €</div>
       </div>
+      <div class="hero-cta">
+        <a href="https://www.yesticket.org/event/de/check-la-lage-improv-show-10-12-26/" target="_blank" rel="noopener" class="btn btn-primary">Get Tickets</a>
+        <a href="#shows" class="btn btn-ghost">All dates</a>
+      </div>
+      <!-- HERO-NEXT:END -->
+      <p class="hero-note">New to improv? No experience needed — just come, grab a drink and laugh.</p>
     </div>
     <div class="hero-photo">
       <img src="images/group-web.png" alt="Check la Lage performers" />
@@ -1091,17 +1185,8 @@
       <div class="show-month">December · Thursday</div>
       <div class="show-venue">Café Engels</div>
       <div class="show-address">Herrfurthstraße 21, 12049 Berlin</div>
-      <div class="show-location">5 € · 20:00</div>
-      <a href="https://rausgegangen.de/en/events/check-la-lage-improv-show-3/" target="_blank" class="show-ticket-link">Get Tickets →</a>
-    </div>
-
-    <div class="show-card" data-date="2027-01-14">
-      <div class="show-date">14</div>
-      <div class="show-month">January · Thursday</div>
-      <div class="show-venue">Café Engels</div>
-      <div class="show-address">Herrfurthstraße 21, 12049 Berlin</div>
-      <div class="show-location">5 € · 20:00</div>
-      <a href="https://rausgegangen.de/en/events/check-la-lage-improv-show-4/" target="_blank" class="show-ticket-link">Get Tickets →</a>
+      <div class="show-location">5 € early bird · 8 € · 20:00</div>
+      <a href="https://www.yesticket.org/event/de/check-la-lage-improv-show-10-12-26/" target="_blank" rel="noopener" class="show-ticket-link">Get Tickets →</a>
     </div>
 
   </div>
@@ -1419,6 +1504,14 @@
       }
     }
     filterSection('shows', 2, 'No upcoming shows scheduled — check back soon!');
+
+    // Hero "next show" box: if its date has passed (before the daily rebuild), fall back to the newsletter
+    const next = document.querySelector('.next-show[data-date]');
+    if (next && new Date(next.dataset.date) < today) {
+      const cta = next.nextElementSibling;
+      next.remove();
+      if (cta) cta.innerHTML = '<a href="#newsletter" class="btn btn-primary">Get notified about the next show</a>';
+    }
   })();
 
   // Legal modals — deep-linkable via #imprint / #privacy

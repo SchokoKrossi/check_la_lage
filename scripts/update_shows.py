@@ -1,147 +1,70 @@
 #!/usr/bin/env python3
 """
-Scrapes upcoming Check La Lage shows and Improv Playground courses from
-rausgegangen.de and updates index.html. Run daily by GitHub Actions.
+Builds the upcoming-shows parts of index.html from shows.json.
+
+Edit shows.json (date, time, price, ticket link), push, and GitHub Actions
+runs this script. It also runs daily so past shows drop off the page.
+
+Updates three marked regions in index.html:
+  HERO-NEXT  - the "next show" box in the hero
+  SHOWS      - the show cards in the Shows section
+  EVENTS-LD  - schema.org Event data so Google can list the shows
 """
-import re
+import html
+import json
 import sys
 from datetime import date
 from pathlib import Path
 
-import requests
-from bs4 import BeautifulSoup
-
-# Source URLs
-SHOWS_URL   = "https://rausgegangen.de/en/events/check-la-lage-improv-show-0/"
-COURSES_URL = "https://rausgegangen.de/en/organizations/improv-berlin/"
-
-INDEX_HTML = Path(__file__).parent.parent / "index.html"
-
-HEADERS = {
-    "User-Agent": (
-        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
-        "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
-    ),
-    "Accept-Language": "en-US,en;q=0.9",
-}
+ROOT       = Path(__file__).parent.parent
+SHOWS_JSON = ROOT / "shows.json"
+INDEX_HTML = ROOT / "index.html"
+SITE_URL   = "https://schokokrossi.github.io/check_la_lage/"
+MAX_SHOWS  = 2
 
 MONTHS   = ["January","February","March","April","May","June",
             "July","August","September","October","November","December"]
 WEEKDAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
 
-
-# ── helpers ────────────────────────────────────────────────────────────────────
-
-def parse_date(dd_mm_yyyy: str) -> date:
-    d, m, y = dd_mm_yyyy.strip().split(".")
-    return date(int(y), int(m), int(d))
-
-
-def fetch_soup(url: str) -> BeautifulSoup:
-    resp = requests.get(url, headers=HEADERS, timeout=20)
-    resp.raise_for_status()
-    return BeautifulSoup(resp.text, "html.parser")
+DEFAULTS = {
+    "time":    "20:00",
+    "price":   "5 €",
+    "venue":   "Café Engels",
+    "address": "Herrfurthstraße 21, 12049 Berlin",
+}
 
 
-def event_date_from_page(url: str) -> date | None:
-    """Fetch an event page and extract its date from the <title>."""
-    try:
-        soup = fetch_soup(url)
-    except Exception as exc:
-        print(f"  fetch error {url}: {exc}")
-        return None
-    title = soup.find("title")
-    if not title:
-        return None
-    m = re.search(r"on (\d{2}\.\d{2}\.\d{4})", title.text)
-    return parse_date(m.group(1)) if m else None
+# ── data ───────────────────────────────────────────────────────────────────────
 
-
-def collect_urls(soup: BeautifulSoup, pattern: str) -> list[str]:
-    seen, urls = set(), []
-    for a in soup.find_all("a", href=True):
-        href = a["href"]
-        if not href.startswith("http"):
-            href = "https://rausgegangen.de" + href
-        if re.search(pattern, href) and href not in seen:
-            seen.add(href)
-            urls.append(href)
-    return urls
-
-
-# ── shows ──────────────────────────────────────────────────────────────────────
-
-def scrape_shows(max_count: int) -> list[dict]:
+def load_shows() -> list[dict]:
+    data  = json.loads(SHOWS_JSON.read_text(encoding="utf-8"))
     today = date.today()
-    soup  = fetch_soup(SHOWS_URL)
-    urls  = collect_urls(soup, r"check-la-lage-improv-show-\d+/?$")
-    # The starting page rarely links to itself — prepend it so it's always checked
-    base = SHOWS_URL if SHOWS_URL.endswith("/") else SHOWS_URL + "/"
-    if not any(u.rstrip("/") == base.rstrip("/") for u in urls):
-        urls = [SHOWS_URL] + urls
-    print(f"  found {len(urls)} show URL(s)")
-
     shows = []
-    for url in urls:
-        show_date = event_date_from_page(url)
-        if not show_date or show_date < today:
-            print(f"  skip {show_date or url}")
+    for raw in data.get("shows", []):
+        s = {**DEFAULTS, **raw}
+        d = date.fromisoformat(s["date"])
+        if d < today:
             continue
-
-        # Extract time and price from the page
-        try:
-            soup2    = fetch_soup(url)
-            text     = soup2.get_text(" ", strip=True)
-            time_m   = re.search(r"(\d{2}:\d{2})\s*[-–]\s*\d{2}:\d{2}", text)
-            price_m  = re.search(r"(\d+)[,.]00\s*€", text)
-            show_time  = time_m.group(1)  if time_m  else "20:00"
-            show_price = f"{price_m.group(1)} €" if price_m else "5 €"
-        except Exception:
-            show_time, show_price = "20:00", "5 €"
-
-        shows.append({
-            "date":    show_date,
-            "day":     show_date.day,
-            "month":   MONTHS[show_date.month - 1],
-            "weekday": WEEKDAYS[show_date.weekday()],
-            "time":    show_time,
-            "price":   show_price,
-            "url":     url,
-        })
-        print(f"  + show {show_date}")
-        if len(shows) == max_count:
-            break
-
-    return sorted(shows, key=lambda s: s["date"])[:max_count]
+        s.update(
+            d=d,
+            day=d.day,
+            month=MONTHS[d.month - 1],
+            weekday=WEEKDAYS[d.weekday()],
+        )
+        shows.append(s)
+    return sorted(shows, key=lambda s: s["d"])[:MAX_SHOWS]
 
 
-# ── courses ────────────────────────────────────────────────────────────────────
+def berlin_offset(d: date) -> str:
+    """UTC offset for Berlin: CEST from last Sunday of March to last Sunday of October."""
+    def last_sunday(month: int) -> date:
+        last = date(d.year, month, 31)
+        return date.fromordinal(last.toordinal() - (last.weekday() + 1) % 7)
+    return "+02:00" if last_sunday(3) <= d < last_sunday(10) else "+01:00"
 
-def scrape_courses(max_count: int) -> list[dict]:
-    today = date.today()
-    soup  = fetch_soup(COURSES_URL)
-    urls  = collect_urls(soup, r"improv-playground-\d+/?$")
-    print(f"  found {len(urls)} course URL(s)")
 
-    courses = []
-    for url in urls:
-        course_date = event_date_from_page(url)
-        if not course_date or course_date < today:
-            print(f"  skip {course_date or url}")
-            continue
-
-        courses.append({
-            "date":    course_date,
-            "day":     course_date.day,
-            "month":   MONTHS[course_date.month - 1],
-            "weekday": WEEKDAYS[course_date.weekday()],
-            "url":     url,
-        })
-        print(f"  + course {course_date}")
-        if len(courses) == max_count:
-            break
-
-    return sorted(courses, key=lambda c: c["date"])[:max_count]
+def esc(value) -> str:
+    return html.escape(str(value), quote=True)
 
 
 # ── HTML builders ──────────────────────────────────────────────────────────────
@@ -152,70 +75,112 @@ def build_shows_html(shows: list[dict]) -> str:
     cards = []
     for s in shows:
         cards.append(
-            f'    <div class="show-card" data-date="{s["date"]}">\n'
+            f'    <div class="show-card" data-date="{s["d"]}">\n'
             f'      <div class="show-date">{s["day"]}</div>\n'
             f'      <div class="show-month">{s["month"]} · {s["weekday"]}</div>\n'
-            f'      <div class="show-venue">Café Engels</div>\n'
-            f'      <div class="show-address">Herrfurthstraße 21, 12049 Berlin</div>\n'
-            f'      <div class="show-location">{s["price"]} · {s["time"]}</div>\n'
-            f'      <a href="{s["url"]}" target="_blank" class="show-ticket-link">Get Tickets →</a>\n'
+            f'      <div class="show-venue">{esc(s["venue"])}</div>\n'
+            f'      <div class="show-address">{esc(s["address"])}</div>\n'
+            f'      <div class="show-location">{esc(s["price"])} · {esc(s["time"])}</div>\n'
+            f'      <a href="{esc(s["ticket_url"])}" target="_blank" rel="noopener" class="show-ticket-link">Get Tickets →</a>\n'
             f'    </div>'
         )
     inner = "\n\n".join(cards)
     return f'  <div class="shows-grid reveal">\n\n{inner}\n\n  </div>'
 
 
-def build_courses_html(courses: list[dict]) -> str:
-    if not courses:
-        return '  <p class="no-show-text">No upcoming sessions scheduled — check back soon!</p>'
-    cards = []
-    for c in courses:
-        cards.append(
-            f'    <div class="show-card reveal" data-date="{c["date"]}">\n'
-            f'      <span class="show-tag">Improv Playground · Open Level</span>\n'
-            f'      <div class="show-date">{c["day"]}</div>\n'
-            f'      <div class="show-month">{c["month"]} · {c["weekday"]}</div>\n'
-            f'      <div class="show-venue">Hotel Continental</div>\n'
-            f'      <div class="show-address">ArtSpaceInExile · Berlin</div>\n'
-            f'      <div class="show-location">20 € per session · 19:00</div>\n'
-            f'      <a href="{c["url"]}" target="_blank" class="show-ticket-link">Book a Spot →</a>\n'
-            f'    </div>'
+def build_hero_next_html(shows: list[dict]) -> str:
+    if not shows:
+        return (
+            '      <div class="hero-cta">\n'
+            '        <a href="#newsletter" class="btn btn-primary">Get notified about the next show</a>\n'
+            '      </div>'
         )
-    inner = "\n\n".join(cards)
-    return f'  <div class="shows-grid">\n\n{inner}\n\n  </div>'
+    s = shows[0]
+    return (
+        f'      <div class="next-show" data-date="{s["d"]}">\n'
+        f'        <div class="next-show-label">Next show</div>\n'
+        f'        <div class="next-show-date">{s["weekday"]}, {s["day"]} {s["month"]} · {esc(s["time"])}</div>\n'
+        f'        <div class="next-show-venue">{esc(s["venue"])} · {esc(s["address"])}</div>\n'
+        f'        <div class="next-show-price">{esc(s["price"])}</div>\n'
+        f'      </div>\n'
+        f'      <div class="hero-cta">\n'
+        f'        <a href="{esc(s["ticket_url"])}" target="_blank" rel="noopener" class="btn btn-primary">Get Tickets</a>\n'
+        f'        <a href="#shows" class="btn btn-ghost">All dates</a>\n'
+        f'      </div>'
+    )
+
+
+def build_events_ld(shows: list[dict]) -> str:
+    events = []
+    for s in shows:
+        street, _, rest = s["address"].partition(",")
+        postal, _, city = rest.strip().partition(" ")
+        price_digits = "".join(ch for ch in s["price"].split("€")[0] if ch.isdigit() or ch in ".,").replace(",", ".")
+        events.append({
+            "@context": "https://schema.org",
+            "@type": "TheaterEvent",
+            "name": "Check la Lage – Improv Show",
+            "description": "Unscripted improv theatre: every scene is made up on the spot from audience suggestions.",
+            "startDate": f'{s["d"]}T{s["time"]}:00{berlin_offset(s["d"])}',
+            "eventStatus": "https://schema.org/EventScheduled",
+            "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+            "image": [SITE_URL + "images/group-web.png"],
+            "location": {
+                "@type": "Place",
+                "name": s["venue"],
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": street.strip(),
+                    "postalCode": postal,
+                    "addressLocality": city or "Berlin",
+                    "addressCountry": "DE",
+                },
+            },
+            "offers": {
+                "@type": "Offer",
+                "url": s["ticket_url"],
+                "price": price_digits or "0",
+                "priceCurrency": "EUR",
+                "availability": "https://schema.org/InStock",
+            },
+            "organizer": {"@type": "PerformingGroup", "name": "Check la Lage", "url": SITE_URL},
+        })
+    payload = json.dumps(events, ensure_ascii=False, indent=2).replace("</", "<\\/")
+    return f'<script type="application/ld+json">\n{payload}\n</script>'
 
 
 # ── HTML updater ───────────────────────────────────────────────────────────────
 
-def update_section(content: str, start_marker: str, end_marker: str, html_block: str) -> str:
+def update_section(content: str, name: str, block: str, indent: str = "  ") -> str:
+    start_marker, end_marker = f"<!-- {name}:BEGIN -->", f"<!-- {name}:END -->"
     if start_marker not in content or end_marker not in content:
         raise ValueError(f"Markers not found: {start_marker!r}")
     start = content.index(start_marker) + len(start_marker)
     end   = content.index(end_marker)
-    return content[:start] + "\n" + html_block + "\n  " + content[end:]
+    return content[:start] + "\n" + block + "\n" + indent + content[end:]
 
 
 # ── main ───────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    print("=== Scraping shows ===")
     try:
-        shows = scrape_shows(max_count=2)
-    except Exception as exc:
-        print(f"ERROR scraping shows: {exc}")
+        shows = load_shows()
+    except (OSError, ValueError, KeyError) as exc:
+        print(f"ERROR reading {SHOWS_JSON.name}: {exc}")
         sys.exit(1)
+    print(f"{len(shows)} upcoming show(s)")
 
-    print(f"\n=== Updating index.html ===")
-    content = INDEX_HTML.read_text(encoding="utf-8")
+    original = INDEX_HTML.read_text(encoding="utf-8")
     try:
-        content = update_section(content, "<!-- SHOWS:BEGIN -->", "<!-- SHOWS:END -->", build_shows_html(shows))
+        content = update_section(original, "HERO-NEXT", build_hero_next_html(shows), indent="      ")
+        content = update_section(content, "SHOWS", build_shows_html(shows))
+        content = update_section(content, "EVENTS-LD", build_events_ld(shows), indent="")
     except ValueError as exc:
         print(f"ERROR: {exc}")
         sys.exit(1)
 
-    original = INDEX_HTML.read_text(encoding="utf-8")
     if content == original:
         print("No changes.")
     else:
         INDEX_HTML.write_text(content, encoding="utf-8")
-        print(f"Updated — {len(shows)} show(s).")
+        print("index.html updated.")
